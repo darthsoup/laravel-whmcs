@@ -52,10 +52,21 @@ class WhmcsServiceProvider extends ServiceProvider
     public function registerWhmcs()
     {
         $this->app->singleton('whmcs', function (Container $app) {
-            $config = $app['config']->get('whmcs');
+            $config = $app['config'];
             $client = $app['whmcs.client'];
             return new WhmcsManager($config, $client);
         });
         $this->app->alias('whmcs', Whmcs::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            'whmcs.client',
+            'whmcs',
+        ];
     }
 }

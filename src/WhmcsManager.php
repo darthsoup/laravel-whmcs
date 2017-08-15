@@ -4,6 +4,7 @@ namespace DarthSoup\Whmcs;
 
 use DarthSoup\Whmcs\Adapter\ConnectorInterface;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Contracts\Config\Repository;
 
 /**
  * Class WhmcsManager
@@ -25,7 +26,7 @@ class WhmcsManager
      * @param $config
      * @param ConnectorInterface $client
      */
-    public function __construct($config, ConnectorInterface $client)
+    public function __construct(Repository $config, ConnectorInterface $client)
     {
         $this->config = $config;
         $this->client = $client;
@@ -36,7 +37,7 @@ class WhmcsManager
      */
     public function connection()
     {
-        return $this->client->connect($this->config);
+        return $this->client->connect($this->config->get('whmcs'));
     }
 
     /**
@@ -44,7 +45,7 @@ class WhmcsManager
      * @param $parameters
      * @return mixed
      */
-    protected function execute(string $method, $parameters)
+    protected function execute(string $method, $parameters = [])
     {
         $parameters['action'] = $method;
 
