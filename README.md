@@ -13,7 +13,14 @@ Run the Composer require command from the Terminal:
 
 Run `composer update` to pull in the files.
 
+### After Laravel 5.5
+
+You do not need anything else to do here
+
+### Before Laravel 5.5 
+
 Now all you have to do is add the service provider of the package and alias the package. To do this, open your `config/app.php` file.
+
 
 Add a new line to the `providers` array:
 
@@ -25,19 +32,32 @@ And optionally add a new line to the `aliases` array:
 
 From the command-line run:
 
-    `php artisan vendor:publish`
+    php artisan vendor:publish
     
-Then open `config\whmcs.php` to insert you WHMCS api credentials.
+Then open `config\whmcs.php` to insert your WHMCS api credentials.
 
 Now you're ready to start using the WHMCS API in your application.
 
 ## Usage
-TODO
 
-Example:
+You can call your WHMCS Instance directly by calling the facade with the an API function.
+This also works with custom created API functions which included in your WHMCS API folder.
+
+### Examples
+
+I want all products from an client
+
 ```php
 \Whmcs::GetClientsProducts([
     'clientid' => '12345'
+])
+```
+
+I want a invoice from a customer
+
+```php
+\Whmcs::GetInvoice([
+    'invoiceid' => '1337'
 ])
 ```
 

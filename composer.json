@@ -16,7 +16,7 @@
     },
     "require-dev": {
         "mockery/mockery": "~0.9",
-        "phpunit/phpunit": "~5.7",
+        "phpunit/phpunit": "~5.0|~6.0",
         "orchestra/testbench": "3.x"
     },
     "autoload": {
@@ -27,6 +27,16 @@
     "autoload-dev": {
         "psr-4": {
             "DarthSoup\\Tests\\Whmcs\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DarthSoup\\Whmcs\\WhmcsServiceProvider"
+            ],
+            "aliases": {
+                "Cart": "DarthSoup\\Whmcs\\Facades\\Whmcs"
+            }
         }
     }
 }
