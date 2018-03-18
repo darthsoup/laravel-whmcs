@@ -1,11 +1,15 @@
 Laravel Whmcs
 ======
 
+[![Latest Stable Version](https://poser.pugx.org/darthsoup/laravel-whmcs/v/stable)](https://packagist.org/packages/darthsoup/laravel-whmcs)
+[![Total Downloads](https://poser.pugx.org/darthsoup/laravel-whmcs/downloads)](https://packagist.org/packages/darthsoup/laravel-whmcs)
+[![License](https://poser.pugx.org/darthsoup/laravel-whmcs/license)](https://packagist.org/packages/darthsoup/laravel-whmcs)
+
 A interface for interacting with whmcs api.
 
 ## Installation
 
-Install the package through [Composer](http://getcomposer.org/). 
+Install the package through [Composer](http://getcomposer.org/).
 
 Run the Composer require command from the Terminal:
 
@@ -17,10 +21,9 @@ Run `composer update` to pull in the files.
 
 You do not need anything else to do here
 
-### Before Laravel 5.5 
+### Before Laravel 5.5
 
 Now all you have to do is add the service provider of the package and alias the package. To do this, open your `config/app.php` file.
-
 
 Add a new line to the `providers` array:
 
@@ -68,6 +71,4 @@ I want a invoice from a customer
 ## License
 
 This package is released under the MIT License. See the bundled
-[LICENSE](https://github.com/darthsoup/laravel-whmcs/blob/master/README.md) file for details.
-
-
+[LICENSE](https://github.com/darthsoup/laravel-whmcs/blob/master/LICENSE) file for details.
