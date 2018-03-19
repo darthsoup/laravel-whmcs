@@ -13,7 +13,9 @@ Install the package through [Composer](http://getcomposer.org/).
 
 Run the Composer require command from the Terminal:
 
-    composer require darthsoup/laravel-whmcs
+```bash
+composer require darthsoup/laravel-whmcs
+```
 
 Run `composer update` to pull in the files.
 
@@ -27,19 +29,42 @@ Now all you have to do is add the service provider of the package and alias the 
 
 Add a new line to the `providers` array:
 
-    DarthSoup\Whmcs\WhmcsServiceProvider::class
+```php
+DarthSoup\Whmcs\WhmcsServiceProvider::class
+```
 
 And optionally add a new line to the `aliases` array:
 
-    'Whmcs' => DarthSoup\Whmcs\Facades\Whmcs::class,
+```php
+'Whmcs' => DarthSoup\Whmcs\Facades\Whmcs::class,
+```
 
 From the command-line run:
 
-    php artisan vendor:publish
-    
+```bash
+php artisan vendor:publish
+```
+
 Then open `config\whmcs.php` to insert your WHMCS api credentials.
 
-Now you're ready to start using the WHMCS API in your application.
+Now you're ready to start using the WHMCS API in your Laravel.
+
+### Lumen
+
+Copy the config file from the package to in your config directory:
+
+```bash
+cp vendor/darthsoup/laravel-whmcs/config/whmcs.php config/whmcs.php
+```
+
+Then open `config\whmcs.php` to insert your WHMCS api credentials.
+
+To finish this, register the config file and the service provider in `bootstrap/app.php`:
+
+```php
+$app->configure('whmcs');
+$app->register(DarthSoup\Whmcs\WhmcsServiceProvider::class);
+```
 
 ## Usage
 
