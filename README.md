@@ -89,6 +89,15 @@ I want a invoice from a customer
 ])
 ```
 
+If you dont use the Facade, you may call it with the `app()` helper.
+
+```php
+$whmcs = app('whmcs');
+$whmcs->execute('GetInvoice', [
+    'invoiceid' => '1337'
+]);
+```
+
 ## Support
 
 [Please open an issue in github](https://github.com/darthsoup/laravel-whmcs/issues)
