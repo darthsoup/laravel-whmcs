@@ -28,9 +28,9 @@ class GuzzleHttpAdapter implements ConnectorInterface
      */
     public function connect(array $config)
     {
-        $config = $this->getConfig($config);
+        $this->config = $this->getConfig($config);
 
-        return $this->getAdapter($config);
+        return $this->getAdapter();
     }
 
     /**
@@ -40,35 +40,56 @@ class GuzzleHttpAdapter implements ConnectorInterface
      */
     private function getConfig($config)
     {
-        if ('password' === $config['auth_type']) {
-            if (!array_key_exists('username', $config) || empty($config['username'])) {
+        if ('api' === $config['auth_type']) {
+
+            $credentials = Arr::get($config, $config['auth_type']);
+
+            if (!array_key_exists('identifier', $credentials) || empty($credentials['identifier'])) {
                 throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
             }
 
-            if (!array_key_exists('password', $config) || empty($config['password'])) {
+            if (!array_key_exists('secret', $credentials) || empty($credentials['secret'])) {
                 throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
             }
-
-            $config['password'] = md5($config['password']);
 
             return $config;
         }
+
+        if ('password' === $config['auth_type']) {
+
+            $credentials = Arr::get($config, $config['auth_type']);
+
+            if (!array_key_exists('username', $credentials) || empty($credentials['username'])) {
+                throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
+            }
+
+            if (!array_key_exists('password', $credentials) || empty($credentials['password'])) {
+                throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
+            }
+
+            $credentials['password'] = md5($credentials['password']);
+            Arr::set($config, $config['auth_type'], $credentials);
+
+            return $config;
+        }
+
+        throw new InvalidArgumentException('Unsupported whmcs auth type');
     }
 
     /**
-     * @param array $config
      * @return Client
      */
-    private function getAdapter(array $config)
+    private function getAdapter()
     {
         return new Client([
-            'base_uri' => $config['apiurl'],
+            'base_uri' => $this->config['api_url'],
             'timeout' => 30,
-            'form_params' => [
-                'username' => $config['username'],
-                'password' => $config['password'],
-                'responsetype' => Arr::get($config, 'responsetype', 'json')
-            ],
+            'form_params' => array_merge(
+                Arr::get($this->config, $this->config['auth_type']),
+                [
+                    'responsetype' => Arr::get($this->config, 'responsetype', 'json')
+                ]
+            ),
             'headers' => [
                 'User-Agent' => 'Laravel WHMCS API Interface',
             ]
