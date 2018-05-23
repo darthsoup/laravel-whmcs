@@ -1,11 +1,11 @@
-Laravel Whmcs
+Laravel WHMCS
 ======
 
 [![Latest Stable Version](https://poser.pugx.org/darthsoup/laravel-whmcs/v/stable)](https://packagist.org/packages/darthsoup/laravel-whmcs)
 [![Total Downloads](https://poser.pugx.org/darthsoup/laravel-whmcs/downloads)](https://packagist.org/packages/darthsoup/laravel-whmcs)
 [![License](https://poser.pugx.org/darthsoup/laravel-whmcs/license)](https://packagist.org/packages/darthsoup/laravel-whmcs)
 
-A interface for interacting with whmcs api.
+An interface for interaction with the WHMCS API in Laravel.
 
 ## Installation
 
@@ -21,7 +21,7 @@ Run `composer update` to pull in the files.
 
 ### After Laravel 5.5
 
-You do not need anything else to do here
+You don't have to do anything else here.
 
 ### Before Laravel 5.5
 
@@ -42,12 +42,12 @@ And optionally add a new line to the `aliases` array:
 From the command-line run:
 
 ```bash
-php artisan vendor:publish
+php artisan vendor:publish --provider=DarthSoup\Whmcs\WhmcsServiceProvider
 ```
 
 Then open `config\whmcs.php` to insert your WHMCS api credentials.
 
-Now you're ready to start using the WHMCS API in your Laravel.
+Now you can use the WHMCS API in your Laravel project.
 
 ### Lumen
 
@@ -66,14 +66,16 @@ $app->configure('whmcs');
 $app->register(DarthSoup\Whmcs\WhmcsServiceProvider::class);
 ```
 
+Now you can use the WHMCS API in your Lumen project.
+
 ## Usage
 
-You can call your WHMCS Instance directly by calling the facade with the an API function.
-This also works with custom created API functions which included in your WHMCS API folder.
+You can call your WHMCS API directly by calling the `\WHMCS::{WHMCSAPIFUNCTION}` facade.
+This also works with custom API functions contained in your WHMCS API folder.
 
 ### Examples
 
-I want all products from an client
+Obtain a list of client purchased products
 
 ```php
 \Whmcs::GetClientsProducts([
@@ -81,7 +83,7 @@ I want all products from an client
 ])
 ```
 
-I want a invoice from a customer
+Retrieve a specific invoice
 
 ```php
 \Whmcs::GetInvoice([
@@ -89,7 +91,7 @@ I want a invoice from a customer
 ])
 ```
 
-If you dont use the Facade, you may call it with the `app()` helper.
+If you dont use the Facade, you can call it with the `app()` helper.
 
 ```php
 $whmcs = app('whmcs');
