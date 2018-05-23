@@ -37,7 +37,7 @@ class WhmcsManager
      */
     public function connection()
     {
-        return $this->client->connect($this->config->get('whmcs'));
+        return $this->client->connect($this->getConfig());
     }
 
     /**
@@ -54,8 +54,8 @@ class WhmcsManager
                 'form_params' => array_merge($parameters, $this->connection()->getConfig()['form_params']),
             ]);
 
-            if ($this->config['responsetype'] === 'xml') {
-                return simplexml_load_string($response->getBody());
+            if ($this->getConfig()['responsetype'] === 'xml') {
+                return simplexml_load_string($response->getBody()->getContents());
             }
 
             return json_decode($response->getBody()->getContents(), true);
@@ -66,7 +66,18 @@ class WhmcsManager
     }
 
     /**
+     * Get the config array.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config->get('whmcs');
+    }
+
+    /**
      * Dynamically pass methods to the default connection.
+     *
      * @param string $method
      * @param array $parameters
      * @return mixed
