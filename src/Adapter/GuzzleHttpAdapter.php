@@ -3,12 +3,12 @@
 namespace DarthSoup\Whmcs\Adapter;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
+use GuzzleHttp\ClientInterface;
 
 /**
- * Class GuzzleHttpAdapter
+ * Class GuzzleHttpAdapter.
  */
 class GuzzleHttpAdapter implements ConnectorInterface
 {
@@ -41,14 +41,13 @@ class GuzzleHttpAdapter implements ConnectorInterface
     private function getConfig($config)
     {
         if ('api' === $config['auth_type']) {
-
             $credentials = Arr::get($config, $config['auth_type']);
 
-            if (!array_key_exists('identifier', $credentials) || empty($credentials['identifier'])) {
+            if (! array_key_exists('identifier', $credentials) || empty($credentials['identifier'])) {
                 throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
             }
 
-            if (!array_key_exists('secret', $credentials) || empty($credentials['secret'])) {
+            if (! array_key_exists('secret', $credentials) || empty($credentials['secret'])) {
                 throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
             }
 
@@ -56,14 +55,13 @@ class GuzzleHttpAdapter implements ConnectorInterface
         }
 
         if ('password' === $config['auth_type']) {
-
             $credentials = Arr::get($config, $config['auth_type']);
 
-            if (!array_key_exists('username', $credentials) || empty($credentials['username'])) {
+            if (! array_key_exists('username', $credentials) || empty($credentials['username'])) {
                 throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
             }
 
-            if (!array_key_exists('password', $credentials) || empty($credentials['password'])) {
+            if (! array_key_exists('password', $credentials) || empty($credentials['password'])) {
                 throw new InvalidArgumentException('The guzzlehttp connector requires configuration.');
             }
 
@@ -87,12 +85,12 @@ class GuzzleHttpAdapter implements ConnectorInterface
             'form_params' => array_merge(
                 Arr::get($this->config, $this->config['auth_type']),
                 [
-                    'responsetype' => Arr::get($this->config, 'responsetype', 'json')
+                    'responsetype' => Arr::get($this->config, 'responsetype', 'json'),
                 ]
             ),
             'headers' => [
                 'User-Agent' => 'Laravel WHMCS API Interface',
-            ]
+            ],
         ]);
     }
 }

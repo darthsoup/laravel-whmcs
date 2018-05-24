@@ -2,12 +2,12 @@
 
 namespace DarthSoup\Whmcs;
 
-use DarthSoup\Whmcs\Adapter\ConnectorInterface;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Contracts\Config\Repository;
+use DarthSoup\Whmcs\Adapter\ConnectorInterface;
 
 /**
- * Class WhmcsManager
+ * Class WhmcsManager.
  */
 class WhmcsManager
 {
@@ -61,6 +61,7 @@ class WhmcsManager
             return json_decode($response->getBody()->getContents(), true);
         } catch (ClientException $ex) {
             $response = json_decode($ex->getResponse()->getBody()->getContents(), true);
+
             return $response;
         }
     }

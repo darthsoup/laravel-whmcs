@@ -29,7 +29,7 @@ return [
 
     'api' => [
         'identifier' => 'YOUR_API_IDENTIFIER',
-        'secret' => 'YOUR_API_SECRET'
+        'secret' => 'YOUR_API_SECRET',
     ],
 
     'password' => [
@@ -46,5 +46,5 @@ return [
     |
     */
 
-    'responsetype' => 'json'
+    'responsetype' => 'json',
 ];

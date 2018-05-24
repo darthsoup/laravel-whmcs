@@ -3,7 +3,7 @@
 namespace DarthSoup\Whmcs\Adapter;
 
 /**
- * Interface ConnectorInterface
+ * Interface ConnectorInterface.
  */
 interface ConnectorInterface
 {

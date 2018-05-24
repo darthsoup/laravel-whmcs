@@ -7,6 +7,5 @@ class WhmcsManagerTest extends TestCase
     /** @test */
     public function CreateConnection()
     {
-
     }
 }

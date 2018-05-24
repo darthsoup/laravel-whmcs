@@ -2,12 +2,12 @@
 
 namespace DarthSoup\Whmcs;
 
-use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
+use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
 
 /**
- * Whmcs ServiceProvider
+ * Whmcs ServiceProvider.
  */
 class WhmcsServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,7 @@ class WhmcsServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->isLaravel()) {
-            $source = dirname(__DIR__) . '/config/whmcs.php';
+            $source = dirname(__DIR__).'/config/whmcs.php';
             $this->publishes([$source => config_path('whmcs.php')]);
             $this->mergeConfigFrom($source, 'whmcs');
         }
@@ -38,7 +38,7 @@ class WhmcsServiceProvider extends ServiceProvider
     }
 
     /**
-     * register Client
+     * register Client.
      */
     public function registerClient()
     {
@@ -49,13 +49,14 @@ class WhmcsServiceProvider extends ServiceProvider
     }
 
     /**
-     * register Whmcs
+     * register Whmcs.
      */
     public function registerWhmcs()
     {
         $this->app->singleton('whmcs', function (Container $app) {
             $config = $app['config'];
             $client = $app['whmcs.client'];
+
             return new WhmcsManager($config, $client);
         });
         $this->app->alias('whmcs', Whmcs::class);
@@ -73,10 +74,10 @@ class WhmcsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function isLaravel()
     {
-        return !preg_match('/lumen/i', $this->app->version());
+        return ! preg_match('/lumen/i', $this->app->version());
     }
 }

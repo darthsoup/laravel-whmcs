@@ -5,9 +5,7 @@ namespace DarthSoup\Whmcs\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Whmcs
- *
- * @package DarthSoup\Whmcs\Facades
+ * Class Whmcs.
  */
 class Whmcs extends Facade
 {
