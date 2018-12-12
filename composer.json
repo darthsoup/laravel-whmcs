@@ -35,7 +35,7 @@
                 "DarthSoup\\Whmcs\\WhmcsServiceProvider"
             ],
             "aliases": {
-                "Cart": "DarthSoup\\Whmcs\\Facades\\Whmcs"
+                "Whmcs": "DarthSoup\\Whmcs\\Facades\\Whmcs"
             }
         }
     }
