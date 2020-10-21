@@ -46,5 +46,5 @@ return [
     |
     */
 
-    'responsetype' => env('WHMCS_RESPONSE_TYPE','json'),
+    'responsetype' => env('WHMCS_RESPONSE_TYPE', 'json'),
 ];
