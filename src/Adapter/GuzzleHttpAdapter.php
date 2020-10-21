@@ -80,7 +80,6 @@ class GuzzleHttpAdapter implements ConnectorInterface
     private function getAdapter()
     {
         return new Client([
-            'base_uri' => $this->config['apiurl'],
             'timeout' => 30,
             'form_params' => array_merge(
                 Arr::get($this->config, $this->config['auth_type']),
