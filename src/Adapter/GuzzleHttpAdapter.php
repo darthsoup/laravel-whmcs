@@ -3,9 +3,9 @@
 namespace DarthSoup\Whmcs\Adapter;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use GuzzleHttp\ClientInterface;
 
 /**
  * Class GuzzleHttpAdapter.
