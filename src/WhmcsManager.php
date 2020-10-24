@@ -2,9 +2,9 @@
 
 namespace DarthSoup\Whmcs;
 
+use DarthSoup\Whmcs\Adapter\ConnectorInterface;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Contracts\Config\Repository;
-use DarthSoup\Whmcs\Adapter\ConnectorInterface;
 
 /**
  * Class WhmcsManager.
@@ -50,7 +50,8 @@ class WhmcsManager
         $parameters['action'] = $method;
 
         try {
-            $response = $this->connection()->post('api.php', [
+            $url = $this->getConfig()['apiurl'].'/api.php';
+            $response = $this->connection()->post($url, [
                 'form_params' => array_merge($parameters, $this->connection()->getConfig()['form_params']),
             ]);
 
