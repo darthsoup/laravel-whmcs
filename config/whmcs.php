@@ -23,18 +23,18 @@ return [
     |
     */
 
-    'auth_type' => 'password',
+    'auth_type' =>  env('WHMCS_AUTH_TYPE', 'password'),
 
-    'apiurl' => 'https://url.to.whmcs.tld/whmcs/includes/api.php',
+    'apiurl' => env('WHMCS_API_URL', 'https://url.to.whmcs.tld/whmcs/includes/api.php'),
 
     'api' => [
-        'identifier' => 'YOUR_API_IDENTIFIER',
-        'secret' => 'YOUR_API_SECRET',
+        'identifier' => env('WHMCS_API_IDENTIFIER', 'YOUR_API_IDENTIFIER'),
+        'secret' => env('WHMCS_API_SECRET', 'YOUR_API_SECRET'),
     ],
 
     'password' => [
-        'username' => 'YOUR_USERNAME',
-        'password' => 'YOUR_PASSWORD',
+        'username' => env('WHMCS_USERNAME', 'YOUR_USERNAME'),
+        'password' => env('WHMCS_PASSWORD', 'YOUR_PASSWORD'),
     ],
 
     /*
@@ -46,5 +46,5 @@ return [
     |
     */
 
-    'responsetype' => 'json',
+    'responsetype' => env('WHMCS_RESPONSE_TYPE', 'json'),
 ];
