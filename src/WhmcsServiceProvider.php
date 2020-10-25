@@ -2,9 +2,9 @@
 
 namespace DarthSoup\Whmcs;
 
+use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
 use Illuminate\Container\Container;
 use Illuminate\Support\ServiceProvider;
-use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
 
 /**
  * Whmcs ServiceProvider.
