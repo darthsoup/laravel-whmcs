@@ -2,27 +2,14 @@
 
 namespace DarthSoup\Tests\Whmcs;
 
-use Whmcs;
+use DarthSoup\Whmcs\WhmcsManager;
 
-class ServiceProviderTest extends TestCase
+class ServiceProviderTest extends AbstractTestCase
 {
-    /** @test */
-    public function ThrowAnExceptionIfConfigNotExist()
+    public function testInstantiated()
     {
-        $this->app['config']->set('whmcs.password.username', '');
-        $this->app['config']->set('whmcs.password.password', '');
+        $instance = $this->app->make('whmcs');
 
-        $this->expectException(\InvalidArgumentException::class);
-
-        // call random WHMCS API
-        Whmcs::GetProducts();
-    }
-
-    /** @test */
-    public function CanGetWhmcsProduct()
-    {
-        // call random WHMCS API
-        $result = Whmcs::GetProducts();
-        $this->assertNotNull($result);
+        $this->assertInstanceOf(WhmcsManager::class, $instance);
     }
 }
