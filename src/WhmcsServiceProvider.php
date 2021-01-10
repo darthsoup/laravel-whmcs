@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DarthSoup\Whmcs;
 
 use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
 use Illuminate\Container\Container;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Lumen\Application as LumenApplication;
 
-/**
- * Whmcs ServiceProvider.
- */
 class WhmcsServiceProvider extends ServiceProvider
 {
     /**
@@ -18,11 +19,15 @@ class WhmcsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->isLaravel()) {
-            $source = dirname(__DIR__).'/config/whmcs.php';
+        $source = realpath($raw = __DIR__ . '/../config/whmcs.php') ?: $raw;
+
+        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('whmcs.php')]);
-            $this->mergeConfigFrom($source, 'whmcs');
+        } elseif ($this->app instanceof LumenApplication) {
+            $this->app->configure('whmcs');
         }
+
+        $this->mergeConfigFrom($source, 'whmcs');
     }
 
     /**
@@ -34,24 +39,25 @@ class WhmcsServiceProvider extends ServiceProvider
     {
         $this->registerClient();
 
-        $this->registerWhmcs();
+        $this->registerManager();
     }
 
     /**
-     * register Client.
+     * Register HttpClient.
      */
     public function registerClient()
     {
         $this->app->singleton('whmcs.client', function () {
             return new GuzzleHttpAdapter();
         });
+
         $this->app->alias('whmcs.client', GuzzleHttpAdapter::class);
     }
 
     /**
-     * register Whmcs.
+     * Register Manager.
      */
-    public function registerWhmcs()
+    public function registerManager()
     {
         $this->app->singleton('whmcs', function (Container $app) {
             $config = $app['config'];
@@ -59,7 +65,8 @@ class WhmcsServiceProvider extends ServiceProvider
 
             return new WhmcsManager($config, $client);
         });
-        $this->app->alias('whmcs', Whmcs::class);
+
+        $this->app->alias('whmcs', WhmcsManager::class);
     }
 
     /**
@@ -71,13 +78,5 @@ class WhmcsServiceProvider extends ServiceProvider
             'whmcs.client',
             'whmcs',
         ];
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isLaravel()
-    {
-        return ! preg_match('/lumen/i', $this->app->version());
     }
 }
