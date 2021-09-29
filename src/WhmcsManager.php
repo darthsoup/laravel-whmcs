@@ -50,7 +50,11 @@ class WhmcsManager
         $parameters['action'] = $method;
 
         try {
-            $url = $this->getConfig()['apiurl'].'/api.php';
+            $url = $this->getConfig()['apiurl'];
+            if (!preg_match('/\/api\.php$/i', $url)) {
+                $url = rtrim($url, '/') . '/api.php';
+            }
+
             $response = $this->connection()->post($url, [
                 'form_params' => array_merge($parameters, $this->connection()->getConfig()['form_params']),
             ]);
