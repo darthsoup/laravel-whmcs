@@ -70,8 +70,9 @@ Now you can use the WHMCS API in your Lumen project.
 
 ## Usage
 
-You can call your WHMCS API directly by calling the `\WHMCS::{WHMCSAPIFUNCTION}` facade.
-This also works with custom API functions contained in your WHMCS API folder.
+You can call your WHMCS API directly by calling the facade `\Whmcs::{WHMCSAPIFUNCTION}`.
+
+This also works with any custom API functions contained in your WHMCS API folder.
 
 ### Examples
 

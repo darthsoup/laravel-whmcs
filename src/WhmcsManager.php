@@ -41,11 +41,11 @@ class WhmcsManager
     }
 
     /**
-     * @param $method
-     * @param $parameters
+     * @param string $method
+     * @param array $parameters
      * @return mixed
      */
-    protected function execute(string $method, $parameters = [])
+    public function execute(string $method, $parameters = [])
     {
         $parameters['action'] = $method;
 

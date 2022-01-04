@@ -59,7 +59,7 @@ class WhmcsServiceProvider extends ServiceProvider
 
             return new WhmcsManager($config, $client);
         });
-        $this->app->alias('whmcs', Whmcs::class);
+        $this->app->alias('whmcs', WhmcsManager::class);
     }
 
     /**
