@@ -7,6 +7,10 @@ Laravel WHMCS
 
 An interface for interaction with the WHMCS API in Laravel.
 
+> **Notice:**
+>
+> The working legacy branch can be found [here](https://github.com/darthsoup/laravel-whmcs/tree/legacy)
+
 ## Installation
 
 Install the package through [Composer](http://getcomposer.org/). Run the Composer require command from the Terminal:

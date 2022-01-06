@@ -9,21 +9,19 @@
         }
     ],
     "require": {
-        "php": "^7.2.5|^8.0",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
-        "illuminate/support": "~6.0|~7.0|~8.0",
-        "illuminate/session": "~6.0|~7.0|~8.0",
-        "illuminate/events": "~6.0|~7.0|~8.0",
-        "psr/http-message": "^1.0",
-        "psr/http-client": "^1.0",
-        "psr/http-factory": "^1.0"
+        "illuminate/support": "~7.0|~8.0",
+        "illuminate/session": "~7.0|~8.0",
+        "illuminate/events": "~7.0|~8.0",
+        "darthsoup/php-whmcs-api": "~1.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.0",
         "http-interop/http-factory-guzzle": "^1.0",
         "mockery/mockery": "~1.3",
-        "orchestra/testbench": "5.x",
-        "phpunit/phpunit": "^8.5.8|^9.3.3"
+        "orchestra/testbench": "^5.0|^6.0",
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": {
@@ -36,8 +34,7 @@
         }
     },
     "suggest": {
-        "guzzlehttp/guzzle" : "A PSR-18 compatible HTTP Client (^7.0)",
-        "http-interop/http-factory-guzzle" : "PSR-17 compatible HTTP Factories (^1.0)"
+        "guzzlehttp/guzzle" : "A PSR-18 compatible HTTP Client (^7.0)"
     },
     "extra": {
         "laravel": {
