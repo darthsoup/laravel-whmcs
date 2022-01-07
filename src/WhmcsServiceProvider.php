@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DarthSoup\Whmcs;
 
-use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;

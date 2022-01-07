@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DarthSoup\Whmcs;
+namespace DarthSoup\Whmcs\Auth;
 
-class WhmcsManager
+class AuthenticatorFactory
 {
     public function make(string $method)
     {
