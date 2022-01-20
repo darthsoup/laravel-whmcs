@@ -51,5 +51,4 @@ class WhmcsFactory
 
         return $builder;
     }
-
 }

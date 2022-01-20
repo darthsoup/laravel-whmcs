@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace DarthSoup\Whmcs;
 
-use Closure;
 use DarthSoup\WhmcsApi\Client;
 use GrahamCampbell\Manager\AbstractManager;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Support\Arr;
-use InvalidArgumentException;
 
 /**
- * @method array<string,\DarthSoup\WhmcsApi\Client> getConnections()
+ * @method array<string, \DarthSoup\WhmcsApi\Client> getConnections()
  * @method \DarthSoup\WhmcsApi\Api\Authentication authentication()
  * @method \DarthSoup\WhmcsApi\Api\Billing billing()
  * @method \DarthSoup\WhmcsApi\Api\Client client()

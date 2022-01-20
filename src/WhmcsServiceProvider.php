@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DarthSoup\Whmcs;
 
 use DarthSoup\Whmcs\Auth\AuthFactory;
-use DarthSoup\Whmcs\Facades\Whmcs;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
