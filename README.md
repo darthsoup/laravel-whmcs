@@ -6,12 +6,15 @@ Laravel WHMCS
 [![License](https://poser.pugx.org/darthsoup/laravel-whmcs/license)](https://packagist.org/packages/darthsoup/laravel-whmcs)
 
 An interface for interaction with the WHMCS API in Laravel.
+This Package is heavily inspired by [Laravel GitLab](https://github.com/GrahamCampbell/Laravel-GitLab) created by [Graham Campbell](https://github.com/GrahamCampbell/).
 
 > **Notice:**
 >
-> The working legacy branch can be found [here](https://github.com/darthsoup/laravel-whmcs/tree/legacy)
+> The legacy version 0.3 can be found [here](https://github.com/darthsoup/laravel-whmcs/tree/legacy)
 
 ## Installation
+
+Laravel WHMCS requires PHP ^7.4 | ^8.0 with at least Laravel version 6.
 
 Install the package through [Composer](http://getcomposer.org/). Run the Composer require command from the Terminal:
 
@@ -19,10 +22,10 @@ Install the package through [Composer](http://getcomposer.org/). Run the Compose
 composer require darthsoup/laravel-whmcs
 ```
 
-Package will be installed automaticlly through composer package discovery. If not, then you need to register 
-the `DarthSoup\Whmcs\WhmcsService` service provider in your config/app.php.
+Package will be installed automatically through composer package discovery. If not, then you need to register 
+the `DarthSoup\Whmcs\WhmcsService` service provider in your `config/app.php`.
 
-Optionally, you can add the alias if you prefer to use the Facade
+Optionally, you can add the alias if you prefer to use the Facade:
 
 ```php
 'Whmcs' => DarthSoup\Whmcs\Facades\Whmcs::class
@@ -30,47 +33,36 @@ Optionally, you can add the alias if you prefer to use the Facade
 
 ## Configuration
 
-To get started, you'll need to publish all vendor assets.
+To get started, you'll need to publish vendor assets for Laravel-Whmcs.
 
 ```bash
 php artisan vendor:publish --provider=DarthSoup\Whmcs\WhmcsServiceProvider
 ```
 
-Then open `config\whmcs.php` to fill your WHMCS api credentials in
+This will create the `config/whmcs.php` file in your app, modify it to set your configuration.
 
-Now you can use the WHMCS API in your Laravel project.
+#### Default Connection
 
-### Lumen
+The option `default` is where you specify the default connection.
 
-Copy the config file from the package to your projects config directory:
+#### Whmcs Connections
 
-```bash
-cp vendor/darthsoup/laravel-whmcs/config/whmcs.php config/whmcs.php
-```
+The option `connections` is where you can add multiple connections to your whmcs instances.
+You can choose between both API connection types from whmcs. These methods are `password` and `token`.
+Example connections has been included, but you can add as many connections you would like.
 
-Then open `config\whmcs.php` to fill your WHMCS api credentials in.
+## Usage
 
-To finish this, register the config file and the service provider in `bootstrap/app.php`:
+#### via dependency injection
 
-```php
-$app->configure('whmcs');
-$app->register(DarthSoup\Whmcs\WhmcsServiceProvider::class);
-```
-
-Now you can use the WHMCS API in your Lumen project.
-
-## Basic Usage
-
-You can call your WHMCS API directly by calling the `\WHMCS::{WHMCSAPIFUNCTION}` facade.
-
-If you prefer dependency injection, you can inject the manager like this:
+If you prefer to use Dependency Injection, you can easily add it to your controller as below:
 
 ```php
 use DarthSoup\Whmcs\WhmcsManager;
 
 class WhmcsController extends Controller
 {
-    private $whmcsManager;
+    private WhmcsManager $whmcsManager;
 
     public function __construct(WhmcsManager $whmcsManager)
     {
@@ -79,19 +71,34 @@ class WhmcsController extends Controller
 
     public function index()
     {
-        $this->whmcsManager->execute('GetInvoice', ['invoiceid' => '1337']);
+        $result = $this->whmcsManager->client()->getClients();
+        dd($result);
     }
 }
 ```
-**Hint**: The execute command will also support your self-created WHMCS api commands.
 
+#### Via Facade
 
-### Examples
+If you prefer the classic Laravel facade style, this might be the way to go:
+
+```php
+use \DarthSoup\Whmcs\Facades\Whmcs;
+# or
+use \Whmcs;
+
+\Whmcs::Client()->getClientsDomains([
+    'clientid' => '1'
+]);
+```
+
+#### API Examples
 
 Obtain a list of client purchased products:
 
 ```php
-\Whmcs::GetClientsProducts([
+use \DarthSoup\Whmcs\Facades\Whmcs;
+
+\Whmcs::Client()->getClientsProducts([
     'clientid' => '12345'
 ]);
 ```
@@ -99,10 +106,12 @@ Obtain a list of client purchased products:
 Retrieve a specific invoice:
 
 ```php
-\Whmcs::GetInvoice([
+\Whmcs::Billing()->getInvoice([
     'invoiceid' => '1337'
 ]);
 ```
+
+For more information on how to use the WhmcsApi Client `DarthSoup\WhmcsApi\Client` class, check out the documentation at https://github.com/darthsoup/php-whmcs-api
 
 ## Support
 
