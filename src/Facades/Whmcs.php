@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DarthSoup\Whmcs\Facades;
 
 use Illuminate\Support\Facades\Facade;

@@ -1,6 +1,8 @@
 name: tests
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
 
@@ -10,12 +12,11 @@ jobs:
     strategy:
       matrix:
         operating-system:
-          - 'ubuntu-latest'
+          - 'ubuntu-20.04'
         php-version:
-          - '7.2'
-          - '7.3'
           - '7.4'
           - '8.0'
+          - '8.1'
 
     runs-on: ${{ matrix.operating-system }}
 

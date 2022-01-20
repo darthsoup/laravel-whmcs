@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DarthSoup\Whmcs;
 
-use DarthSoup\Whmcs\Adapter\GuzzleHttpAdapter;
+use DarthSoup\Whmcs\Auth\AuthFactory;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
@@ -37,33 +37,47 @@ class WhmcsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerClient();
-
+        $this->registerAuthFactory();
+        $this->registerWhmcsFactroy();
         $this->registerManager();
     }
 
     /**
-     * Register HttpClient.
+     * Register the auth factory class.
      */
-    public function registerClient()
+    protected function registerAuthFactory(): void
     {
-        $this->app->singleton('whmcs.client', function () {
-            return new GuzzleHttpAdapter();
+        $this->app->singleton('whmcs.authfactory', function () {
+            return new AuthFactory();
         });
 
-        $this->app->alias('whmcs.client', GuzzleHttpAdapter::class);
+        $this->app->alias('whmcs.authfactory', AuthFactory::class);
     }
 
     /**
-     * Register Manager.
+     * Register the whmcs factory class.
      */
-    public function registerManager()
+    public function registerWhmcsFactroy(): void
+    {
+        $this->app->singleton('whmcs.factory', function (Container $app) {
+            $auth = $app['whmcs.authfactory'];
+
+            return new WhmcsFactory($auth);
+        });
+
+        $this->app->alias('whmcs.factory', WhmcsFactory::class);
+    }
+
+    /**
+     * Register the whmcs factory class.
+     */
+    public function registerManager(): void
     {
         $this->app->singleton('whmcs', function (Container $app) {
             $config = $app['config'];
-            $client = $app['whmcs.client'];
+            $factory = $app['whmcs.factory'];
 
-            return new WhmcsManager($config, $client);
+            return new WhmcsManager($config, $factory);
         });
 
         $this->app->alias('whmcs', WhmcsManager::class);
@@ -72,10 +86,11 @@ class WhmcsServiceProvider extends ServiceProvider
     /**
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [
-            'whmcs.client',
+            'whmcs.authfactory',
+            'whmcs.factory',
             'whmcs',
         ];
     }

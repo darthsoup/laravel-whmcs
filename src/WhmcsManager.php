@@ -1,91 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DarthSoup\Whmcs;
 
-use DarthSoup\Whmcs\Adapter\ConnectorInterface;
-use GuzzleHttp\Exception\ClientException;
+use DarthSoup\WhmcsApi\Client;
+use GrahamCampbell\Manager\AbstractManager;
 use Illuminate\Contracts\Config\Repository;
 
 /**
- * Class WhmcsManager.
+ * @method array<string, \DarthSoup\WhmcsApi\Client> getConnections()
+ * @method \DarthSoup\WhmcsApi\Api\Authentication authentication()
+ * @method \DarthSoup\WhmcsApi\Api\Billing billing()
+ * @method \DarthSoup\WhmcsApi\Api\Client client()
+ * @method \DarthSoup\WhmcsApi\Api\Custom custom()
+ * @method \DarthSoup\WhmcsApi\Api\Domains domains()
+ * @method \DarthSoup\WhmcsApi\Api\Orders orders()
+ * @method \DarthSoup\WhmcsApi\Api\Servers servers()
+ * @method \DarthSoup\WhmcsApi\Api\System system()
+ * @method \DarthSoup\WhmcsApi\Api\Users users()
  */
-class WhmcsManager
+class WhmcsManager extends AbstractManager
 {
-    /**
-     * @var
-     */
-    protected $config;
+    protected WhmcsFactory $factory;
 
-    /**
-     * @var ConnectorInterface
-     */
-    protected $client;
-
-    /**
-     * Whmcs constructor.
-     * @param $config
-     * @param ConnectorInterface $client
-     */
-    public function __construct(Repository $config, ConnectorInterface $client)
+    public function __construct(Repository $config, WhmcsFactory $factory)
     {
-        $this->config = $config;
-        $this->client = $client;
+        parent::__construct($config);
+        $this->factory = $factory;
     }
 
-    /**
-     * @return ConnectorInterface
-     */
-    public function connection()
+    protected function createConnection(array $config): Client
     {
-        return $this->client->connect($this->getConfig());
+        return $this->factory->make($config);
     }
 
-    /**
-     * @param $method
-     * @param $parameters
-     * @return mixed
-     */
-    protected function execute(string $method, $parameters = [])
+    public function getFactory(): WhmcsFactory
     {
-        $parameters['action'] = $method;
-
-        try {
-            $url = $this->getConfig()['apiurl'].'/api.php';
-            $response = $this->connection()->post($url, [
-                'form_params' => array_merge($parameters, $this->connection()->getConfig()['form_params']),
-            ]);
-
-            if ($this->getConfig()['responsetype'] === 'xml') {
-                return simplexml_load_string($response->getBody()->getContents());
-            }
-
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (ClientException $ex) {
-            $response = json_decode($ex->getResponse()->getBody()->getContents(), true);
-
-            return $response;
-        }
+        return $this->factory;
     }
 
-    /**
-     * Get the config array.
-     *
-     * @return array
-     */
-    public function getConfig()
+    protected function getConfigName(): string
     {
-        return $this->config->get('whmcs');
-    }
-
-    /**
-     * Dynamically pass methods to the default connection.
-     *
-     * @param string $method
-     * @param array $parameters
-     * @return mixed
-     */
-    public function __call(string $method, $parameters)
-    {
-        return $this->execute($method, ...$parameters);
+        return 'whmcs';
     }
 }
