@@ -6,7 +6,7 @@ namespace DarthSoup\Whmcs\Auth;
 
 use DarthSoup\WhmcsApi\Client;
 
-class AbstractAuth implements AuthInterface
+abstract class AbstractAuth implements AuthInterface
 {
     protected Client $client;
 

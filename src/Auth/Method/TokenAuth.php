@@ -24,7 +24,7 @@ class TokenAuth extends AbstractAuth
         }
 
         $this->client->authenticate(
-            $config['identifer'],
+            $config['identifier'],
             $config['secret'],
             Client::AUTH_API_CREDENTIALS
         );
