@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -19,6 +21,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define your whmcs connections here.
+    | Do not add the path `/includes/api.php` to the URL, it will be added automatically.
     |
     | Methods: "password", "token"
     |
@@ -26,7 +29,7 @@ return [
 
     'connections' => [
 
-        'main' => [
+        'primary' => [
             'method' => env('WHMCS_AUTH_TYPE', 'password'),
             'url' => env('WHMCS_API_URL', 'https://url.to.whmcs.tld/whmcs'),
             'username' => env('WHMCS_USERNAME', 'YOUR_USERNAME'),
