@@ -6,28 +6,30 @@ namespace DarthSoup\Whmcs;
 
 use Closure;
 use DarthSoup\WhmcsApi\Client;
+use GrahamCampbell\Manager\AbstractManager;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
-class WhmcsManager
+/**
+ * @method array<string,\DarthSoup\WhmcsApi\Client> getConnections()
+ * @method \DarthSoup\WhmcsApi\Api\Authentication authentication()
+ * @method \DarthSoup\WhmcsApi\Api\Billing billing()
+ * @method \DarthSoup\WhmcsApi\Api\Client client()
+ * @method \DarthSoup\WhmcsApi\Api\Custom custom()
+ * @method \DarthSoup\WhmcsApi\Api\Domains domains()
+ * @method \DarthSoup\WhmcsApi\Api\Orders orders()
+ * @method \DarthSoup\WhmcsApi\Api\Servers servers()
+ * @method \DarthSoup\WhmcsApi\Api\System system()
+ * @method \DarthSoup\WhmcsApi\Api\Users users()
+ */
+class WhmcsManager extends AbstractManager
 {
     protected WhmcsFactory $factory;
 
-    protected Repository $config;
-
-    /**
-     * @var array<string,object>
-     */
-    protected $connections = [];
-
-    /**
-     * @var array<string,callable>
-     */
-    protected $extensions = [];
-
     public function __construct(Repository $config, WhmcsFactory $factory)
     {
-        $this->config = $config;
+        parent::__construct($config);
         $this->factory = $factory;
     }
 
@@ -41,109 +43,8 @@ class WhmcsManager
         return $this->factory;
     }
 
-    public function connection(string $name = null)
-    {
-        $name = $name ?: $this->getDefaultConnection();
-
-        if (!isset($this->connections[$name])) {
-            $this->connections[$name] = $this->makeConnection($name);
-        }
-
-        return $this->connections[$name];
-    }
-
-    public function reconnect(string $name = null)
-    {
-        $name = $name ?: $this->getDefaultConnection();
-
-        $this->disconnect($name);
-
-        return $this->connection($name);
-    }
-
-    public function disconnect(string $name = null): void
-    {
-        $name = $name ?: $this->getDefaultConnection();
-
-        unset($this->connections[$name]);
-    }
-
-    protected function makeConnection(string $name): Client
-    {
-        $config = $this->getConnectionConfig($name);
-
-        if (isset($this->extensions[$name])) {
-            return $this->extensions[$name]($config);
-        }
-
-        if ($driver = Arr::get($config, 'driver')) {
-            if (isset($this->extensions[$driver])) {
-                return $this->extensions[$driver]($config);
-            }
-        }
-
-        return $this->createConnection($config);
-    }
-
-    public function getConnectionConfig(string $name = null): array
-    {
-        $name = $name ?: $this->getDefaultConnection();
-
-        return $this->getNamedConfig('connections', 'Connection', $name);
-    }
-
-    protected function getNamedConfig(string $type, string $desc, string $name): array
-    {
-        $data = $this->config->get($this->getConfigName().'.'.$type);
-
-        if (!is_array($config = Arr::get($data, $name)) && !$config) {
-            throw new InvalidArgumentException("$desc [$name] not configured.");
-        }
-
-        $config['name'] = $name;
-
-        return $config;
-    }
-
-    public function getDefaultConnection(): string
-    {
-        return $this->config->get($this->getConfigName().'.default');
-    }
-
-    public function setDefaultConnection(string $name): void
-    {
-        $this->config->set($this->getConfigName().'.default', $name);
-    }
-
-    public function extend(string $name, callable $resolver): void
-    {
-        if ($resolver instanceof Closure) {
-            $this->extensions[$name] = $resolver->bindTo($this, $this);
-        } else {
-            $this->extensions[$name] = $resolver;
-        }
-    }
-
-    /**
-     * @return array<string,object>
-     */
-    public function getConnections(): array
-    {
-        return $this->connections;
-    }
-
-    public function getConfig(): Repository
-    {
-        return $this->config;
-    }
-
     protected function getConfigName(): string
     {
         return 'whmcs';
-    }
-
-    public function __call(string $method, array $parameters)
-    {
-        return $this->connection()->$method(...$parameters);
     }
 }
