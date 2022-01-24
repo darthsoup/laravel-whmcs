@@ -17,6 +17,7 @@ abstract class AbstractTestCase extends TestCase
     {
         return ['Whmcs' => Whmcs::class];
     }
+
     /**
      * Define environment setup.
      *
