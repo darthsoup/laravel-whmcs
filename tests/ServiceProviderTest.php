@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DarthSoup\Tests\Whmcs;
 
 use DarthSoup\Whmcs\Auth\AuthFactory;

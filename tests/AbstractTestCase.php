@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DarthSoup\Tests\Whmcs;
 
 use DarthSoup\Whmcs\Facades\Whmcs;
@@ -21,7 +23,7 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
