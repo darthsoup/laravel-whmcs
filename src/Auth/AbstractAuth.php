@@ -8,7 +8,7 @@ use DarthSoup\WhmcsApi\Client;
 
 abstract class AbstractAuth implements AuthInterface
 {
-    protected ?Client $client;
+    protected ?Client $client = null;
 
     public function with(Client $client): AuthInterface
     {

@@ -17,10 +17,10 @@ class PasswordAuth extends AbstractAuth
         }
 
         if (!array_key_exists('username', $config)) {
-            throw new InvalidArgumentException('The token authenticator requires a username.');
+            throw new InvalidArgumentException('The password authenticator requires a username.');
         }
         if (!array_key_exists('password', $config)) {
-            throw new InvalidArgumentException('The token authenticator requires a password.');
+            throw new InvalidArgumentException('The password authenticator requires a password.');
         }
 
         $this->client->authenticate(
