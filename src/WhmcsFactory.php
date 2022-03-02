@@ -22,7 +22,7 @@ class WhmcsFactory
 
     public function make(array $config): Client
     {
-        $client = new Client($this->getBuilder($config));
+        $client = $this->getClient($this->getBuilder($config));
 
         if (!array_key_exists('method', $config)) {
             throw new InvalidArgumentException('The whmcs factory requires an auth method.');
@@ -50,5 +50,10 @@ class WhmcsFactory
         }
 
         return $builder;
+    }
+    
+    protected function getClient(Builder $builder): Client
+    {
+        return new Client($builder);
     }
 }
