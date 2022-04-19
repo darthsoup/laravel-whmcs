@@ -6,6 +6,7 @@ namespace DarthSoup\Whmcs\Auth\Method;
 
 use DarthSoup\Whmcs\Auth\AbstractAuth;
 use DarthSoup\WhmcsApi\Client;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 class PasswordAuth extends AbstractAuth
@@ -28,6 +29,10 @@ class PasswordAuth extends AbstractAuth
             $config['password'],
             Client::AUTH_LOGIN_CREDENTIALS
         );
+
+        if (Arr::has($config, 'access_key') && null !== $config['access_key']) {
+            $this->client->accessKey($config['access_key']);
+        }
 
         return $this->client;
     }

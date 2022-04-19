@@ -51,7 +51,7 @@ class WhmcsFactory
 
         return $builder;
     }
-    
+
     protected function getClient(Builder $builder): Client
     {
         return new Client($builder);

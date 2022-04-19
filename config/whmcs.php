@@ -34,6 +34,7 @@ return [
             'url' => env('WHMCS_API_URL', 'https://url.to.whmcs.tld/whmcs'),
             'username' => env('WHMCS_USERNAME', 'YOUR_USERNAME'),
             'password' => env('WHMCS_PASSWORD', 'YOUR_PASSWORD'),
+            'access_key' => env('WHMCS_ACCESSKEY')
         ],
 
         'secondary' => [
@@ -41,6 +42,7 @@ return [
             'url' => env('WHMCS_API_URL', 'https://url.to.whmcs.tld/whmcs'),
             'identifier' => env('WHMCS_API_IDENTIFIER', 'YOUR_API_IDENTIFIER'),
             'secret' => env('WHMCS_API_SECRET', 'YOUR_API_SECRET'),
+            'access_key' => env('WHMCS_API_ACCESSKEY')
         ]
     ]
 ];
