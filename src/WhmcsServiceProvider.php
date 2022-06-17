@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DarthSoup\Whmcs;
 
 use DarthSoup\Whmcs\Auth\AuthFactory;
+use DarthSoup\WhmcsApi\Api\Client;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
@@ -40,6 +41,7 @@ class WhmcsServiceProvider extends ServiceProvider
         $this->registerAuthFactory();
         $this->registerWhmcsFactroy();
         $this->registerManager();
+        $this->registerBindings();
     }
 
     /**
@@ -84,6 +86,23 @@ class WhmcsServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the bindings.
+     *
+     * @return void
+     */
+    protected function registerBindings()
+    {
+        $this->app->bind('whmcs.connection', function (Container $app) {
+            /** @var WhmcsManager $manager */
+            $manager = $app['whmcs'];
+
+            return $manager->connection();
+        });
+
+        $this->app->alias('whmcs.connection', Client::class);
+    }
+
+    /**
      * @return array
      */
     public function provides(): array
@@ -92,6 +111,7 @@ class WhmcsServiceProvider extends ServiceProvider
             'whmcs.authfactory',
             'whmcs.factory',
             'whmcs',
+            'whmcs.connection',
         ];
     }
 }
