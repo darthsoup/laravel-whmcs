@@ -6,7 +6,8 @@ Laravel WHMCS
 [![License](https://poser.pugx.org/darthsoup/laravel-whmcs/license)](https://packagist.org/packages/darthsoup/laravel-whmcs)
 
 An interface for interaction with the WHMCS API in Laravel.
-This Package is heavily inspired by [Laravel GitLab](https://github.com/GrahamCampbell/Laravel-GitLab) created by [Graham Campbell](https://github.com/GrahamCampbell/).
+This Package is heavily inspired by [Laravel GitLab](https://github.com/GrahamCampbell/Laravel-GitLab) created
+by [Graham Campbell](https://github.com/GrahamCampbell/).
 
 > **Notice:**
 >
@@ -22,7 +23,7 @@ Install the package through [Composer](http://getcomposer.org/). Run the Compose
 composer require darthsoup/laravel-whmcs
 ```
 
-Package will be installed automatically through composer package discovery. If not, then you need to register 
+Package will be installed automatically through composer package discovery. If not, then you need to register
 the `DarthSoup\Whmcs\WhmcsService` service provider in your `config/app.php`.
 
 Optionally, you can add the alias if you prefer to use the Facade:
@@ -86,32 +87,35 @@ use \DarthSoup\Whmcs\Facades\Whmcs;
 # or
 use \Whmcs;
 
-\Whmcs::Client()->getClientsDomains([
-    'clientid' => '1'
-]);
+\Whmcs::Client()->getClientsDomains(['clientid' => '1']);
 ```
 
-#### API Examples
-
-Obtain a list of client purchased products:
+#### Real examples 
 
 ```php
 use \DarthSoup\Whmcs\Facades\Whmcs;
 
-\Whmcs::Client()->getClientsProducts([
-    'clientid' => '12345'
-]);
+# Obtaining a list of domains purchased by the customer
+\Whmcs::Client()->getClientsDomains(['clientid' => '1']);
+
+# Obtaining a list of products purchased by the customer
+\Whmcs::Client()->getClientsProducts(['clientid' => '12345']);
+
+# Retrieve a specific invoice
+\Whmcs::Billing()->getInvoice(['invoiceid' => '1337']);
+
+# Retrieves all Orders from the system
+\Whmcs::Orders()->getOrders();
+
+# Obtain internal users
+\Whmcs::Users()->getUsers(['search' => 'foo@bar.org']);
+
+# Custom Method (in case you added custom endpoints) 
+\Whmcs::Custom()-><myEndpoint>(['foo' => 'bar']);
 ```
 
-Retrieve a specific invoice:
-
-```php
-\Whmcs::Billing()->getInvoice([
-    'invoiceid' => '1337'
-]);
-```
-
-For more information on how to use the WhmcsApi Client `DarthSoup\WhmcsApi\Client` class, check out the documentation at https://github.com/darthsoup/php-whmcs-api
+For more information on how to use the WhmcsApi Client `DarthSoup\WhmcsApi\Client` class, check out the documentation
+at https://github.com/darthsoup/php-whmcs-api.
 
 ## Support
 
