@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DarthSoup\Whmcs\WhmcsManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class WhmcsController extends Controller
@@ -14,14 +15,14 @@ class WhmcsController extends Controller
         $this->whmcsManager = $whmcsManager;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $result = $this->whmcsManager->client()->getClients();
 
         return response()->json($result);
     }
 
-    public function createClient(Request $request)
+    public function createClient(Request $request): JsonResponse
     {
         $result = $this->whmcsManager->client()->addClient([
             'firstname' => 'Foo',

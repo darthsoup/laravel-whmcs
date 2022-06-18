@@ -50,10 +50,8 @@ class WhmcsServiceProvider extends ServiceProvider
 
     /**
      * Register the http client factory class.
-     *
-     * @return void
      */
-    protected function registerHttpClientFactory()
+    protected function registerHttpClientFactory(): void
     {
         $this->app->singleton('whmcs.httpclientfactory', function () {
             $psrFactory = new PsrHttpFactory();
@@ -68,7 +66,6 @@ class WhmcsServiceProvider extends ServiceProvider
 
         $this->app->alias('whmcs.httpclientfactory', HttpClientBuilderFactory::class);
     }
-
 
     /**
      * Register the auth factory class.
@@ -114,10 +111,8 @@ class WhmcsServiceProvider extends ServiceProvider
 
     /**
      * Register the bindings.
-     *
-     * @return void
      */
-    protected function registerBindings()
+    protected function registerBindings(): void
     {
         $this->app->bind('whmcs.connection', function (Container $app) {
             /** @var WhmcsManager $manager */
@@ -135,6 +130,7 @@ class WhmcsServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
+            'whmcs.httpclientfactory',
             'whmcs.authfactory',
             'whmcs.factory',
             'whmcs',

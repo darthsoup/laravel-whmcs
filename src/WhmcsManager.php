@@ -10,13 +10,17 @@ use Illuminate\Contracts\Config\Repository;
 
 /**
  * @method array<string, \DarthSoup\WhmcsApi\Client> getConnections()
+ * @method \DarthSoup\WhmcsApi\Api\Addons addons()
+ * @method \DarthSoup\WhmcsApi\Api\Affiliates affiliates()
  * @method \DarthSoup\WhmcsApi\Api\Authentication authentication()
  * @method \DarthSoup\WhmcsApi\Api\Billing billing()
  * @method \DarthSoup\WhmcsApi\Api\Client client()
  * @method \DarthSoup\WhmcsApi\Api\Custom custom()
  * @method \DarthSoup\WhmcsApi\Api\Domains domains()
  * @method \DarthSoup\WhmcsApi\Api\Orders orders()
+ * @method \DarthSoup\WhmcsApi\Api\Products products()
  * @method \DarthSoup\WhmcsApi\Api\Servers servers()
+ * @method \DarthSoup\WhmcsApi\Api\Service service()
  * @method \DarthSoup\WhmcsApi\Api\System system()
  * @method \DarthSoup\WhmcsApi\Api\Users users()
  */
