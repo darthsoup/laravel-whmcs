@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DarthSoup\Whmcs;
 
 use DarthSoup\Whmcs\Auth\AuthFactory;
+use DarthSoup\Whmcs\HttpClient\HttpClientBuilderFactory;
 use DarthSoup\WhmcsApi\Client;
 use DarthSoup\WhmcsApi\HttpClient\Builder;
 use Http\Client\Common\Plugin\RetryPlugin;
@@ -15,8 +16,11 @@ class WhmcsFactory
 {
     protected AuthFactory $auth;
 
-    public function __construct(AuthFactory $auth)
+    protected HttpClientBuilderFactory $builder;
+
+    public function __construct(AuthFactory $auth, HttpClientBuilderFactory $builder)
     {
+        $this->builder = $builder;
         $this->auth = $auth;
     }
 
@@ -41,7 +45,7 @@ class WhmcsFactory
 
     protected function getBuilder(array $config): Builder
     {
-        $builder = new Builder();
+        $builder = $this->builder->make();
 
         if ($backoff = Arr::get($config, 'backoff')) {
             $builder->addPlugin(

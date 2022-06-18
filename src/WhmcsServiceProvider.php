@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace DarthSoup\Whmcs;
 
 use DarthSoup\Whmcs\Auth\AuthFactory;
-use DarthSoup\WhmcsApi\Api\Client;
+use DarthSoup\Whmcs\HttpClient\HttpClientBuilderFactory;
+use DarthSoup\WhmcsApi\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Psr7\HttpFactory as PsrHttpFactory;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
@@ -38,11 +41,34 @@ class WhmcsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerHttpClientFactory();
         $this->registerAuthFactory();
         $this->registerWhmcsFactroy();
         $this->registerManager();
         $this->registerBindings();
     }
+
+    /**
+     * Register the http client factory class.
+     *
+     * @return void
+     */
+    protected function registerHttpClientFactory()
+    {
+        $this->app->singleton('whmcs.httpclientfactory', function () {
+            $psrFactory = new PsrHttpFactory();
+
+            return new HttpClientBuilderFactory(
+                new GuzzleClient(['connect_timeout' => 10, 'timeout' => 30]),
+                $psrFactory,
+                $psrFactory,
+                $psrFactory,
+            );
+        });
+
+        $this->app->alias('whmcs.httpclientfactory', HttpClientBuilderFactory::class);
+    }
+
 
     /**
      * Register the auth factory class.
@@ -62,9 +88,10 @@ class WhmcsServiceProvider extends ServiceProvider
     public function registerWhmcsFactroy(): void
     {
         $this->app->singleton('whmcs.factory', function (Container $app) {
+            $builder = $app['whmcs.httpclientfactory'];
             $auth = $app['whmcs.authfactory'];
 
-            return new WhmcsFactory($auth);
+            return new WhmcsFactory($auth, $builder);
         });
 
         $this->app->alias('whmcs.factory', WhmcsFactory::class);
