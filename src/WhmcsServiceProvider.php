@@ -10,9 +10,8 @@ use DarthSoup\WhmcsApi\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\HttpFactory as PsrHttpFactory;
 use Illuminate\Container\Container;
-use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Application as LumenApplication;
 
 class WhmcsServiceProvider extends ServiceProvider
 {
@@ -25,10 +24,8 @@ class WhmcsServiceProvider extends ServiceProvider
     {
         $source = realpath($raw = __DIR__ . '/../config/whmcs.php') ?: $raw;
 
-        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+        if ($this->app instanceof Application && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('whmcs.php')]);
-        } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('whmcs');
         }
 
         $this->mergeConfigFrom($source, 'whmcs');
