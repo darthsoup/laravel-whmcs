@@ -48,5 +48,19 @@ return [
             'access_key' => env('WHMCS_API_ACCESSKEY')
         ],
 
-    ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Timeout Settings
+    |--------------------------------------------------------------------------
+    |
+    | Set the connection timeout and general timeout in seconds for the HTTP
+    | client below, integer values only.
+    |
+    */
+
+    'connect_timeout' => 10,
+
+    'timeout' => 30,
 ];

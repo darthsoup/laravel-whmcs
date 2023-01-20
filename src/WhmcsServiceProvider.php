@@ -50,11 +50,14 @@ class WhmcsServiceProvider extends ServiceProvider
      */
     protected function registerHttpClientFactory(): void
     {
-        $this->app->singleton('whmcs.httpclientfactory', function () {
+        $this->app->singleton('whmcs.httpclientfactory', function (Container $app) {
             $psrFactory = new PsrHttpFactory();
 
             return new HttpClientBuilderFactory(
-                new GuzzleClient(['connect_timeout' => 10, 'timeout' => 30]),
+                new GuzzleClient([
+                    'connect_timeout' => $app['config']->get('whmcs.connect_timeout', 10),
+                    'timeout' => $app['config']->get('whmcs.timeout', 30),
+                ]),
                 $psrFactory,
                 $psrFactory,
                 $psrFactory,
