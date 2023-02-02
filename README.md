@@ -1,4 +1,4 @@
-Laravel WHMCS
+WHMCS API for Laravel
 ======
 
 [![Latest Stable Version](https://poser.pugx.org/darthsoup/laravel-whmcs/v/stable)](https://packagist.org/packages/darthsoup/laravel-whmcs)
@@ -15,7 +15,7 @@ by [Graham Campbell](https://github.com/GrahamCampbell/).
 
 ## Installation
 
-Laravel WHMCS requires PHP ^7.4 | ^8.0 with at least Laravel version 6.
+WHMCS API for Laravel requires PHP ^7.4 | ^8.0 with at least Laravel version 6.
 
 Install the package through [Composer](http://getcomposer.org/). Run the Composer require command from the Terminal:
 
@@ -37,7 +37,7 @@ Optionally, you can add the alias if you prefer to use the Facade:
 To get started, you'll need to publish vendor assets for Laravel-Whmcs.
 
 ```bash
-php artisan vendor:publish --provider=DarthSoup\Whmcs\WhmcsServiceProvider
+php artisan vendor:publish --provider="DarthSoup\Whmcs\WhmcsServiceProvider"
 ```
 
 This will create the `config/whmcs.php` file in your app, modify it to set your configuration.
