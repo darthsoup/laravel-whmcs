@@ -15,7 +15,7 @@
         "illuminate/session": "^7.0|^8.0|^9.0|^10.0",
         "illuminate/events": "^7.0|^8.0|^9.0|^10.0",
         "darthsoup/php-whmcs-api": "~1.3",
-        "graham-campbell/manager": "^4.7"
+        "graham-campbell/manager": "^5.0"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.0",
