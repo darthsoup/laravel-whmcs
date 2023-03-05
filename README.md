@@ -15,7 +15,7 @@ by [Graham Campbell](https://github.com/GrahamCampbell/).
 
 ## Installation
 
-WHMCS API for Laravel requires PHP ^7.4 | ^8.0 with at least Laravel version 6.
+WHMCS API for Laravel requires PHP ^7.4 | ^8.0 with at least Laravel 8.
 
 Install the package through [Composer](http://getcomposer.org/). Run the Composer require command from the Terminal:
 
@@ -46,7 +46,7 @@ This will create the `config/whmcs.php` file in your app, modify it to set your 
 
 The option `default` is where you specify the default connection.
 
-#### Whmcs Connections
+#### WHMCS Connections
 
 The option `connections` is where you can add multiple connections to your whmcs instances.
 You can choose between both API connection types from whmcs. These methods are `password` and `token`.
