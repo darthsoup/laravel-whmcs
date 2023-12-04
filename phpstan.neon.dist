@@ -1,8 +1,11 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
-	level: 5
-	paths:
-		- src
-		- config
+    level: max
+    paths:
+        - config
+        - src
+
+    reportUnmatchedIgnoredErrors: true
+    checkMissingIterableValueType: false

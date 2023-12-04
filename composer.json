@@ -1,6 +1,6 @@
 {
     "name": "darthsoup/laravel-whmcs",
-    "description": "WHMCS API interface for Laravel 7.0 and up",
+    "description": "WHMCS API interface for Laravel 9.0 and up",
     "license": "MIT",
     "authors": [
         {
@@ -9,20 +9,20 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0.2",
         "ext-json": "*",
-        "illuminate/support": "^8.0|^9.0|^10.0",
-        "illuminate/session": "^8.0|^9.0|^10.0",
-        "illuminate/events": "^8.0|^9.0|^10.0",
+        "illuminate/support": "^9.0|^10.0",
+        "illuminate/session": "^9.0|^10.0",
+        "illuminate/events": "^9.0|^10.0",
         "darthsoup/php-whmcs-api": "~1.3",
         "graham-campbell/manager": "^5.0"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^7.8",
         "http-interop/http-factory-guzzle": "^1.0",
-        "mockery/mockery": "~1.3",
-        "nunomaduro/larastan": "^1.0.4",
-        "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
+        "mockery/mockery": "~1.6",
+        "larastan/larastan": "^2.7",
+        "orchestra/testbench": "^7.33|^8.13",
         "phpunit/phpunit": "^9.3"
     },
     "autoload": {
@@ -49,6 +49,11 @@
             "aliases": {
                 "Whmcs": "DarthSoup\\Whmcs\\Facades\\Whmcs"
             }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
         }
     }
 }
