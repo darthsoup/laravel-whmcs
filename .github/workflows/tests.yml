@@ -5,18 +5,13 @@ on:
   pull_request:
 
 jobs:
-
   tests:
     name: ${{ matrix.operating-system }} with PHP ${{ matrix.php-version }}
 
     strategy:
       matrix:
-        operating-system:
-          - 'ubuntu-20.04'
-        php-version:
-          - '7.4'
-          - '8.0'
-          - '8.1'
+        operating-system: [ubuntu-20.04]
+        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
 
     runs-on: ${{ matrix.operating-system }}
 
